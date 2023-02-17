@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { pageHeight } from "../constants";
 
 function Login() {
   //Icon trigger js
@@ -21,8 +22,8 @@ function Login() {
 
   return (
     <>
-      <div className="h-screen flex justify-center items-center">
-        <div className="w-full max-w-xs ">
+      <div className="flex justify-center items-center" style={pageHeight}>
+        <div className="w-full max-w-xs">
           <form
             onSubmit={handleLogin}
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
