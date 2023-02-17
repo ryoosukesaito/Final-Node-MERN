@@ -26,7 +26,7 @@ const loginController = async (req,res) => {
     await user.save();
     res.status(200).json(user);
   } catch (error) {
-    
+    res.status(400).json(error.message);
   }
 }
 
