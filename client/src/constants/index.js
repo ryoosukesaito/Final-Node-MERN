@@ -16,3 +16,5 @@ export const dropdownMenuItems = [
   { key: "settings", name: "Settings", href: "#" },
   { key: "logout", name: "Sign out", href: "#" },
 ];
+
+export const  pageHeight ={ height: "calc(100vh - 66px)"};

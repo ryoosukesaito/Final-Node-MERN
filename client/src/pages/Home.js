@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import  {pageHeight}  from "../constants";
+
 function Home() {
   const [style, setStyle] = useState({ float: "right", display: "block" });
 
@@ -41,7 +43,7 @@ function Home() {
         </div>
       </div>
 
-      <header className="bg-white shadow h-screen">
+      <header className="bg-white shadow " style={{pageHeight}}>
         <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             Dashboard

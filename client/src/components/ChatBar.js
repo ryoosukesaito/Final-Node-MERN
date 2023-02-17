@@ -14,9 +14,9 @@ function ChatBar() {
   ];
 
   return (
-    <div className="h-screen w-full bg-gray-200 text-gray-600 flex flex-col shadow overflow-y-scroll">
-      <h2 className=" text-2xl py-3 shadow pl-2">Chat Rooms</h2>
-      <div className=" h-80 overflow-y-scroll mb-2">
+    <div className="h-full w-full bg-gray-200 text-gray-600 flex flex-col shadow overflow-y-scroll">
+      <h2 className="text-xl py-3 shadow pl-2">Chat Rooms</h2>
+      <div className=" h-1/4 overflow-y-scroll mb-2">
         {rooms.map((room, index) => (
           <div
             key={index}
@@ -27,19 +27,9 @@ function ChatBar() {
         ))}
       </div>
 
-      <h2 className="text-2xl py-2 shadow pl-2">個人チャット</h2>
+      <h2 className="text-xl py-2 shadow pl-2">Private Chat</h2>
       <div className=" h-auto overflow-y-scroll mb-2">
         <div>
-          <div className="truncate hover:bg-white px-5 py-3 text-lg">hoge</div>
-          <div className="truncate hover:bg-white px-5 py-3 text-lg">hoge</div>
-          <div className="truncate hover:bg-white px-5 py-3 text-lg">
-            hogehogehogehogehogehoge
-          </div>
-          <div className="truncate hover:bg-white px-5 py-3 text-lg">hoge</div>
-          <div className="truncate hover:bg-white px-5 py-3 text-lg">hoge</div>
-          <div className="truncate hover:bg-white px-5 py-3 text-lg">
-            hogehogehogehogehogehoge
-          </div>
           <div className="truncate hover:bg-white px-5 py-3 text-lg">hoge</div>
           <div className="truncate hover:bg-white px-5 py-3 text-lg">hoge</div>
           <div className="truncate hover:bg-white px-5 py-3 text-lg">
