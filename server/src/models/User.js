@@ -52,8 +52,8 @@ UserSchema.methods.toJSON = function(){
 }
 
 //validating user Email and password
-UserSchema.static.findByCredentials = async function( email, password){
-  const user = await UserSchema.findOne({ email})
+UserSchema.statics.findByCredentials = async function( email, password){
+  const user = await User.findOne({email})
   if(!user) throw new Error('Email or Password does not match');
   const isValid = await bcrypt.compare(password, user.password);
   if(!isValid) throw new Error('Password does not match');
