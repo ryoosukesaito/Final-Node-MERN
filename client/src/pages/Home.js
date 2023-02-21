@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import  {pageHeight}  from "../constants";
 
 function Home() {
+  const user = useSelector((state) => state.user)
   const [style, setStyle] = useState({ float: "right", display: "block" });
 
   useEffect(() => {
@@ -24,7 +26,7 @@ function Home() {
         >
           <strong className="font-bold">Success message</strong>
           <br />
-          <span className="block sm:inline">Hello Username</span>
+          <span className="block sm:inline">Hello  {user.name}</span>
           <span
             id="close"
             className="absolute flex items-center top-0 bottom-0 right-0 pr-2 py-3"
