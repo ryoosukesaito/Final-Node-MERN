@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
-const rooms = ["General", "Work", "Drink🍻", "School", "Snow Boarding!"];
+const rooms = ["General", "Work", "Drink🍻", "School", "Final Pj Group"];
 const cors = require("cors");
 const User = require("./models/User");
 const Message = require("./models/Message");

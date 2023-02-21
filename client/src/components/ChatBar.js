@@ -44,7 +44,7 @@ function ChatBar() {
     if (user) {
       setCurrentRoom("general");
       getRooms();
-      socket.emit("join-room", "general");
+      socket.emit("join-room", "General");
       socket.emit("new-user");
     }
   }, []);
