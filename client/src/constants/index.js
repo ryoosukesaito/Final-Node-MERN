@@ -10,11 +10,4 @@ export const beforeLoginMenu = [
   {name: "Sign Up", href: "/signup", priority: true}
 ]
 
-export const dropdownMenuItems = [
-  { key: "home", name: "Home", href: "/home" },
-  { key: "profile", name: "Your Profile", href: "#" },
-  { key: "settings", name: "Settings", href: "#" },
-  { key: "logout", name: "Sign out", href: "#" },
-];
-
 export const  pageHeight ={ height: "calc(100vh - 66px)"};

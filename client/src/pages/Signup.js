@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSignupUserMutation } from "../services/appAPI";
 
 import { pageHeight } from "../constants";
 
@@ -18,9 +19,19 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signupUser, {error}] = useSignupUserMutation();
+  const navigate = useNavigate();
 
   function handleSignup(e) {
     e.preventDefault();
+
+    //signup user
+    signupUser({ name, email, password }).then(({ data }) => {
+      if (data) {
+        console.log(data);
+        navigate("/home");
+      }
+    });
   }
 
   return (
@@ -37,7 +48,7 @@ function Signup() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="username"
+                htmlFor="username"
               >
                 Username
               </label>
@@ -46,7 +57,7 @@ function Signup() {
                 id="username"
                 type="text"
                 placeholder="Username"
-                autocomplete="off"
+                autoComplete="off"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
                 required
@@ -55,7 +66,7 @@ function Signup() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="email"
+                htmlFor="email"
               >
                 Email
               </label>
@@ -63,7 +74,7 @@ function Signup() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 placeholder="Email"
-                autocomplete="off"
+                autoComplete="off"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 required
@@ -72,7 +83,7 @@ function Signup() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -94,25 +105,7 @@ function Signup() {
               </div>
             </div>
 
-            {/* <%if(status=="error"){%> */}
-            <div
-              className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative"
-              role="alert"
-              id="error"
-            >
-              {" "}
-              msg{" "}
-            </div>
-            {/* <% } else if(status=="success" ){%> */}
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 p-2 mb-4 rounded relative"
-              role="alert"
-              id="success"
-            >
-              msg{" "}
-            </div>
-            {/* <%} else{ %> */}
-            <div></div>
+            {error && <div className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative">{error.data}</div>}
 
             <div className="flex items-center justify-center flex-col">
               <button

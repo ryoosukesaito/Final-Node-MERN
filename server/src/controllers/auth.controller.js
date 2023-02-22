@@ -3,7 +3,6 @@ const User = require("../models/User");
 const signupController = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    console.log(req.body);
     const user = await User.create({ name, email, password });
     res.status(200).json(user);
   } catch (error) {
@@ -29,6 +28,7 @@ const loginController = async (req, res) => {
     res.status(400).json(error.message);
   }
 };
+
 
 module.exports = {
   signupController,

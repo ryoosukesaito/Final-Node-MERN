@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { pageHeight } from "../constants";
+import { AppContext } from "../context/appContext";
+import { useLoginUserMutation } from "../services/appAPI";
 
 function Login() {
   //Icon trigger js
@@ -13,11 +16,24 @@ function Login() {
       : setPwStyle({ type: "password", icon: "fa-regular fa-eye-slash" });
   }
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState('')
-  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { socket } = useContext(AppContext);
+  const [loginUser, { error}] = useLoginUserMutation();
+  const navigate = useNavigate();
+
   function handleLogin(e) {
     e.preventDefault();
+
+    // login logic
+    loginUser({ email, password }).then(({ data }) => {
+      if (data) {
+        //socket
+        socket.emit("new-user");
+        //navigate to home page
+        navigate("/home");
+      }
+    });
   }
 
   return (
@@ -32,7 +48,7 @@ function Login() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="email"
+                htmlFor="email"
               >
                 Email
               </label>
@@ -40,8 +56,8 @@ function Login() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="email"
                 placeholder="Email"
-                autocomplete="off"
-                onChange={(e)=> setEmail(e.target.value)}
+                autoComplete="off"
+                onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 required
               />
@@ -49,7 +65,7 @@ function Login() {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -58,7 +74,7 @@ function Login() {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   type={pwStyle.type}
                   placeholder="Password"
-                  onChange={(e)=> setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   required
                 />
@@ -71,26 +87,8 @@ function Login() {
               </div>
             </div>
 
-            {/* <%if(status=="error"){%> */}
-            <div
-              className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative"
-              role="alert"
-              id="error"
-            >
-              {" "}
-              msg{" "}
-            </div>
-            {/* <% } else if(status=="success" ){%> */}
-            <div
-              className="bg-green-100 border border-green-400 text-green-700 p-2 mb-4 rounded relative"
-              role="alert"
-              id="success"
-            >
-              msg{" "}
-            </div>
-            {/* <%} else{ %> */}
-            <div></div>
-
+            {error && <div className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative">{error.data}</div>}
+            
             <div className="flex items-center justify-between">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
