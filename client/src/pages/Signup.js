@@ -105,7 +105,6 @@ function Signup() {
               </div>
             </div>
 
-            {/* <%if(status=="error"){%> */}
             {error && <div className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative">{error.data}</div>}
 
             <div className="flex items-center justify-center flex-col">

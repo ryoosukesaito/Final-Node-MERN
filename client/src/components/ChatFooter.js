@@ -7,7 +7,7 @@ function ChatFooter() {
   const [typingStatus, setTypingStatus] = useState("")
   const [isSubmitted, setIsSubmitted] =useState(false)
   const user = useSelector((state) => state.user);
-  const {socket, currentRoom, setMessages,  } = useContext(AppContext);
+  const {socket, currentRoom, setMessages } = useContext(AppContext);
 
   useEffect(() => {
 
@@ -23,9 +23,10 @@ function ChatFooter() {
   }, [message] )
 
   const handleTyping = () => {
-    socket.emit("typing", ()=>{setTypingStatus(`${user.name} is typing ...`)})
+    socket.emit("typing", `${user.name} is typing ...`)
+    console.log("typing...");
     setIsSubmitted(false);
-    
+    setTypingStatus();
   }
 
 

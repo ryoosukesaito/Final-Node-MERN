@@ -13,11 +13,9 @@ function ChatBar() {
     setMembers,
     currentRoom,
     setCurrentRoom,
-    privateMemberMsg,
     setPrivateMemberMsg,
     rooms,
     setRooms,
-    newMessages,
   } = useContext(AppContext);
 
   function joinRoom(room, isPublic = true) {
@@ -47,7 +45,7 @@ function ChatBar() {
       socket.emit("join-room", "General");
       socket.emit("new-user");
     }
-  }, []);
+  },[]);
 
   socket.off("new-user").on("new-user", (payload) => {
     setMembers(payload);
@@ -89,7 +87,6 @@ function ChatBar() {
             key={index}
             className="truncate hover:bg-white px-5 py-3 text-base cursor-pointer"
             onClick={() => joinRoom(room)}
-            // active={room === currentRoom}
           >
             {room}
             {currentRoom !== room && (
