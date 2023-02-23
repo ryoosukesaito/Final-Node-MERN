@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
+import { SERVER_URL } from '../constants';
 
 function ChatFooter() {
   const [message, setMessage] = useState("");
-  const [typingStatus, setTypingStatus] = useState("")
-  const [isSubmitted, setIsSubmitted] =useState(false)
+  const [typingStatus, setTypingStatus] = useState("");
+  const [isSubmitted, setIsSubmitted] =useState(false);
   const user = useSelector((state) => state.user);
   const {socket, currentRoom, setMessages } = useContext(AppContext);
 
@@ -18,15 +19,16 @@ function ChatFooter() {
         socket.emit("typing", "")
       },2000)
     }
-
+    
     return () => clearTimeout(delayDebounceFn);
   }, [message] )
 
   const handleTyping = () => {
-    socket.emit("typing", `${user.name} is typing ...`)
+    // socket.emit("typing", `${user.name} is typing ...`)
     console.log("typing...");
+    console.log(SERVER_URL+"/rooms")
     setIsSubmitted(false);
-    setTypingStatus();
+    setTypingStatus(user.name);
   }
 
 
@@ -79,7 +81,8 @@ function ChatFooter() {
         </div>
         <textarea
           type="text"
-          className="mt-2 shadow appearance-none border rounded-md w-full pb-20 pt-4 px-6 text-gray-700 leading-tight focus:shadow-outline"
+          rows={3}
+          className="min-h-[100px] h-full mt-2 shadow appearance-none border rounded-md w-full  pt-4 px-6 text-gray-700 leading-tight focus:shadow-outline"
           placeholder="Write message ..."
           disabled={!user}
           value={message}

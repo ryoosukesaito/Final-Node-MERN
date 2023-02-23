@@ -3,16 +3,19 @@ import appApi from "../services/appAPI";
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: null,
+  initialState: {newMessages:{}},
   reducers: {
     addNotifications: (state, { payload }) => {
+      console.log({payload})
       if (state.newMessages[payload]) {
         state.newMessages[payload] = state.newMessages[payload] + 1;
+        console.log("payload (if)>>>", [payload])
       } else {
         state.newMessages[payload] = 1;
+        console.log("payload (else)>>>", [payload])
       }
     },
-    resetNotifications: (state, { payload }) => {
+    resetNotifications: (state, { payload = '' }) => {
       delete state.newMessages[payload];
     },
   },

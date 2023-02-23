@@ -5,6 +5,9 @@ import { AppContext } from "../context/appContext";
 import { useLoginUserMutation } from "../services/appAPI";
 
 function Login() {
+  //test .env variable
+
+
   //Icon trigger js
   const [pwStyle, setPwStyle] = useState({
     type: "password",
@@ -19,7 +22,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { socket } = useContext(AppContext);
-  const [loginUser, { error}] = useLoginUserMutation();
+  const [loginUser, { error }] = useLoginUserMutation();
   const navigate = useNavigate();
 
   function handleLogin(e) {
@@ -87,8 +90,12 @@ function Login() {
               </div>
             </div>
 
-            {error && <div className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative">{error.data}</div>}
-            
+            {error && (
+              <div className="bg-red-100 border border-red-400 text-red-700 p-2 mb-4 rounded relative">
+                {error.data}
+              </div>
+            )}
+
             <div className="flex items-center justify-between">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"

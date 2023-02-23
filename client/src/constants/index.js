@@ -11,3 +11,6 @@ export const beforeLoginMenu = [
 ]
 
 export const  pageHeight ={ height: "calc(100vh - 66px)"};
+
+export const SERVER_URL = process.env.REACT_APP_SOCKET_URL;
+export const HOGE = process.env.REACT_APP_HOGE;

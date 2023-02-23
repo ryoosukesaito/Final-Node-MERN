@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { addNotifications, resetNotifications } from "../features/userSlice";
+import { SERVER_URL } from '../constants';
 
 function ChatBar() {
   const user = useSelector((state) => state.user);
@@ -40,7 +41,7 @@ function ChatBar() {
 
   useEffect(() => {
     if (user) {
-      setCurrentRoom("general");
+      setCurrentRoom("General");
       getRooms();
       socket.emit("join-room", "General");
       socket.emit("new-user");
@@ -52,7 +53,7 @@ function ChatBar() {
   });
 
   function getRooms() {
-    fetch("http://localhost:5001/rooms")
+    fetch(`${SERVER_URL}/rooms`)
       .then((res) => res.json())
       .then((data) => setRooms(data));
   }
@@ -66,9 +67,9 @@ function ChatBar() {
   }
 
   function handlePrivateMemberMsg(member) {
-    setPrivateMemberMsg(member);
     const roomId = orderIds(user._id, member._id);
     joinRoom(roomId, false);
+    setPrivateMemberMsg(member);
   }
 
   if (!user)
