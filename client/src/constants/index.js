@@ -16,7 +16,6 @@ export const SERVER_URL = process.env.REACT_APP_SOCKET_URL;
 
 export function getInitial(obj) {
   return obj.name.charAt(0);
-  // return console.log(obj);
 }
 export function getNewMsg(obj) {
   // return obj.name.charAt(0);

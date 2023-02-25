@@ -3,7 +3,7 @@ import appApi from "../services/appAPI";
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: { newMessages: {} },
+  initialState: null,
   reducers: {
     addNotifications: (state, { payload }) => {
       if (state.newMessages[payload]) {

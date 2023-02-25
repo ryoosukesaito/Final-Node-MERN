@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { addNotifications, resetNotifications } from "../features/userSlice";
-import { SERVER_URL, getInitial,getNewMsg } from "../constants";
+import { SERVER_URL, getInitial } from "../constants";
 
 function ChatBar() {
   const user = useSelector((state) => state.user);
@@ -98,7 +98,6 @@ function ChatBar() {
             {currentRoom !== room && (
               <span className="rounded-full bg-lime-400 ml-5 text-sm w-5 h-full text-gray-500">
                 {user.newMessages[room]}{9}
-                {/* {getNewMsg(user)} */}
               </span>
             )}
           </button>

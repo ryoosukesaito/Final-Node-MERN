@@ -5,8 +5,6 @@ import { AppContext } from "../context/appContext";
 import { useLoginUserMutation } from "../services/appAPI";
 
 function Login() {
-  //test .env variable
-
 
   //Icon trigger js
   const [pwStyle, setPwStyle] = useState({
@@ -25,6 +23,7 @@ function Login() {
   const [loginUser, { error }] = useLoginUserMutation();
   const navigate = useNavigate();
 
+
   function handleLogin(e) {
     e.preventDefault();
 
@@ -34,7 +33,7 @@ function Login() {
         //socket
         socket.emit("new-user");
         //navigate to home page
-        navigate("/chat");
+        navigate("/home");
       }
     });
   }
