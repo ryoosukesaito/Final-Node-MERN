@@ -34,7 +34,7 @@ function Login() {
         //socket
         socket.emit("new-user");
         //navigate to home page
-        navigate("/home");
+        navigate("/chat");
       }
     });
   }

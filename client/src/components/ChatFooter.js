@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
-import { SERVER_URL } from '../constants';
 
 function ChatFooter() {
   const [message, setMessage] = useState("");
@@ -25,8 +24,6 @@ function ChatFooter() {
 
   const handleTyping = () => {
     // socket.emit("typing", `${user.name} is typing ...`)
-    console.log("typing...");
-    console.log(SERVER_URL+"/rooms")
     setIsSubmitted(false);
     setTypingStatus(user.name);
   }
@@ -49,7 +46,7 @@ function ChatFooter() {
   const todayDate = getFormattedDate();
 
   socket.off('room-messages').on('room-messages', (roomMessages)=> {
-    console.log('room messages',roomMessages);
+    // console.log('room messages',roomMessages);
     setMessages(roomMessages);
   })
 
@@ -79,10 +76,10 @@ function ChatFooter() {
         <p className=" text-gray-400">{typingStatus}</p>
 
         </div>
-        <textarea
+        <input
           type="text"
           rows={3}
-          className="min-h-[100px] h-full mt-2 shadow appearance-none border rounded-md w-full  pt-4 px-6 text-gray-700 leading-tight focus:shadow-outline"
+          className="min-h-[100px] h-full mt-2 shadow appearance-none border rounded-md w-full pb-12 pl-5 text-gray-700 leading-tight"
           placeholder="Write message ..."
           disabled={!user}
           value={message}

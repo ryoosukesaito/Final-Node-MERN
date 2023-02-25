@@ -23,7 +23,7 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Can't be blank"],
     },
-    newMessage: {
+    newMessages: {
       type: Object,
       default: {},
     },

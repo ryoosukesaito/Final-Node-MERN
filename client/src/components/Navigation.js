@@ -5,7 +5,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../services/appAPI";
-import { navigation, beforeLoginMenu } from "../constants";
+import { navigation, beforeLoginMenu, getInitial } from "../constants";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -115,7 +115,7 @@ function Navigation() {
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
                         <div className="h-8 w-8 rounded-full pb-1 text-gray-200 flex items-center bg-gray-600 justify-center text-lg">
-                          {user.name[0]}
+                          {getInitial(user)}
                         </div>
                       </Menu.Button>
                     </div>

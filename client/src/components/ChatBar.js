@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { addNotifications, resetNotifications } from "../features/userSlice";
-import { SERVER_URL } from '../constants';
+import { SERVER_URL, getInitial,getNewMsg } from "../constants";
 
 function ChatBar() {
   const user = useSelector((state) => state.user);
@@ -14,16 +14,22 @@ function ChatBar() {
     setMembers,
     currentRoom,
     setCurrentRoom,
+    privateMemberMsg,
     setPrivateMemberMsg,
     rooms,
     setRooms,
   } = useContext(AppContext);
 
+  function getBooleanToString (obj1, obj2){
+    return obj1 === obj2 ? "true" : "false" 
+  }
+
+
   function joinRoom(room, isPublic = true) {
     if (!user) {
       return alert("Please Login");
     }
-    socket.emit("join-room", room);
+    socket.emit("join-room", room, currentRoom);
     setCurrentRoom(room);
 
     if (isPublic) {
@@ -31,13 +37,11 @@ function ChatBar() {
     }
     //dispatch for notification
     dispatch(resetNotifications(room));
-
   }
-  
-  socket.off("notifications").on("notifications", (room) => {
-    if(currentRoom !== room)dispatch(addNotifications(room));
-  });
 
+  socket.off("notifications").on("notifications", (room) => {
+    if (currentRoom !== room) dispatch(addNotifications(room));
+  });
 
   useEffect(() => {
     if (user) {
@@ -46,7 +50,7 @@ function ChatBar() {
       socket.emit("join-room", "General");
       socket.emit("new-user");
     }
-  },[]);
+  }, [ ]);
 
   socket.off("new-user").on("new-user", (payload) => {
     setMembers(payload);
@@ -67,9 +71,9 @@ function ChatBar() {
   }
 
   function handlePrivateMemberMsg(member) {
+    setPrivateMemberMsg(member);
     const roomId = orderIds(user._id, member._id);
     joinRoom(roomId, false);
-    setPrivateMemberMsg(member);
   }
 
   if (!user)
@@ -84,18 +88,20 @@ function ChatBar() {
       <h2 className="text-lg py-3 shadow pl-2">Chat Rooms</h2>
       <div className=" h-1/4 overflow-y-scroll mb-2">
         {rooms.map((room, index) => (
-          <div
+          <button
             key={index}
-            className="truncate hover:bg-white px-5 py-3 text-base cursor-pointer"
+            className="truncate w-full flex justify-start hover:bg-white px-5 py-3 text-base cursor-pointer focus:bg-lime-300 active:bg-lime-400"
+            active={getBooleanToString(room, currentRoom)}
             onClick={() => joinRoom(room)}
           >
             {room}
             {currentRoom !== room && (
-              <span className=" rounded-full bg-yellow-300">
-                {/* {user.newMessages[room]} */}
+              <span className="rounded-full bg-lime-400 ml-5 text-sm w-5 h-full text-gray-500">
+                {user.newMessages[room]}{9}
+                {/* {getNewMsg(user)} */}
               </span>
             )}
-          </div>
+          </button>
         ))}
       </div>
 
@@ -103,18 +109,20 @@ function ChatBar() {
       <div className=" h-auto overflow-y-scroll mb-2">
         <div>
           {members.map((member) => (
-            <div
+            <button
               key={member._id}
-              className="truncate hover:bg-white px-5 py-3 text-base cursor-pointer disabled:bg-red-700"
+              className="truncate w-full flex justify-start hover:bg-white px-5 py-3 text-base cursor-pointer disabled:bg-gray-300 active:bg-lime-400 focus:bg-lime-300"
+              active={getBooleanToString(privateMemberMsg?._id,member._id )}
               onClick={() => handlePrivateMemberMsg(member)}
               disabled={member._id === user._id}
             >
               <div className="flex flex-row">
-                <div className="">
+                <div className="flex flex-row">
                   {" "}
                   <span className="h-8 w-8 rounded-full text-gray-200 flex items-center bg-neutral-500 justify-center text-base">
-                    {member.name[0]}
+                    {getInitial(member)}
                   </span>
+                  {member.status === "online" ? <span className="rounded-full bg-green-600 border h-3 w-3 -ml-2 mt-5"></span> : <span className="rounded-full bg-orange-400 border h-3 w-3 -ml-2 mt-5"></span>}
                 </div>
                 <div className="ml-3 pt-1">
                   {member.name}
@@ -123,11 +131,11 @@ function ChatBar() {
                 <div className="ml-5 pt-2  text-xs">
                   {member.status === "offline" && "--Offline--"}
                 </div>
-                <span className=" rounded-full bg-black-500">
-                  {/* {user.newMessages[orderIds(member._id)]} */}
+                <span className="rounded-full bg-lime-400 ml-5 text-sm w-5 h-full text-gray-500">
+                  {user.newMessages[orderIds(member._id, user._id)]}{9}
                 </span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

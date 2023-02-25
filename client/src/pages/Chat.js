@@ -7,8 +7,8 @@ import { pageHeight } from "../constants";
 
 function Chat() {
   return (
-    <div className="w-screen flex items-center" style={pageHeight}>
-      <div className="h-full w-2/12">
+    <div className="w-screen flex items-center flex-row" style={pageHeight}>
+      <div className="h-full ">
       <ChatBar />
       </div>
       <div className="h-full w-screen flex flex-col justify-between">
