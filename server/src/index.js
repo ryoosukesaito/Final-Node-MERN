@@ -86,7 +86,7 @@ io.on("connection", (socket) => {
     //sending message to room
     io.to(room).emit("room-messages", roomMessages);
 
-    socket.broadcast.emit("notification", room);
+    socket.broadcast.emit("notifications", room);
   });
 
   app.delete("/logout", async (req, res) => {

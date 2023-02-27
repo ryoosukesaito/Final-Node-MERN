@@ -16,6 +16,7 @@ function ChatBar() {
     setCurrentRoom,
     privateMemberMsg,
     setPrivateMemberMsg,
+    setNewMessages,
     rooms,
     setRooms,
   } = useContext(AppContext);
@@ -40,7 +41,7 @@ function ChatBar() {
   }
 
   socket.off("notifications").on("notifications", (room) => {
-    if (currentRoom !== room) dispatch(addNotifications(room));
+    if (currentRoom !== room)dispatch(addNotifications(room));
   });
 
   useEffect(() => {
@@ -97,7 +98,7 @@ function ChatBar() {
             {room}
             {currentRoom !== room && (
               <span className="rounded-full bg-lime-400 ml-5 text-sm w-5 h-full text-gray-500">
-                {user.newMessages[room]}{9}
+                {user.newMessages[room]}
               </span>
             )}
           </button>
@@ -131,7 +132,7 @@ function ChatBar() {
                   {member.status === "offline" && "--Offline--"}
                 </div>
                 <span className="rounded-full bg-lime-400 ml-5 text-sm w-5 h-full text-gray-500">
-                  {user.newMessages[orderIds(member._id, user._id)]}{9}
+                  {user.newMessages[orderIds(member._id, user._id)]}
                 </span>
               </div>
             </button>
